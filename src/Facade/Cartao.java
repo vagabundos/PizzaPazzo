@@ -10,6 +10,6 @@ package Facade;
  *
  * @author Gauss
  */
-public class Cartao {
+public class Cartao extends Pagamento{
     
 }

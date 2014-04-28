@@ -10,6 +10,6 @@ package Facade;
  *
  * @author Gauss
  */
-public class Dinheiro {
+public class Dinheiro extends Pagamento{
     
 }

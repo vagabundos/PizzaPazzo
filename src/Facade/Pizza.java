@@ -10,6 +10,6 @@ package Facade;
  *
  * @author Gauss
  */
-public class Pizza {
+public class Pizza extends Produto{
     
 }
