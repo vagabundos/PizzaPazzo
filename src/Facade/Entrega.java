@@ -13,15 +13,14 @@ import java.util.List;
  *
  * @author Gauss
  */
-public class ItemPedido {
-
-    private List<Pedido> listPedidos=null;
+public class Entrega {
+    private List<Pedido> listaPedido=null;
+    public Entrega() {
+        this.listaPedido= new ArrayList<Pedido>();
+    }
+    public Entrega(List<Pedido> listaPedido){
+        this.listaPedido= listaPedido;
+    }
     
-    public ItemPedido(List<Pedido> listPedidos) {
-        this.listPedidos = listPedidos;
-    }
-    public ItemPedido(){
-        this.listPedidos = new ArrayList<Pedido>();
-    }
     
 }
