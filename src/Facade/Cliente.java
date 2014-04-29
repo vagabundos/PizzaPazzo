@@ -11,4 +11,7 @@ package Facade;
  */
 public class Cliente
 {
+    String nome;
+    String telefone;
+    String endereço;
 }
