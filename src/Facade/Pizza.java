@@ -3,13 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Facade;
 
 /**
  *
  * @author Gauss
  */
-public class Pizza extends Produto{
-    
+public class Pizza extends Produto
+{
 }
