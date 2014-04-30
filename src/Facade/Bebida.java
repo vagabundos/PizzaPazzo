@@ -11,4 +11,9 @@ package Facade;
  */
 public class Bebida extends Produto
 {
+
+    public Bebida(String descricao, float preco, int id)
+    {
+        super(descricao, preco, id);
+    }
 }

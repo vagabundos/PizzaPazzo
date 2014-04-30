@@ -10,6 +10,7 @@ package Singleton;
  *
  * @author Gauss
  */
-public class PedidoFactoryConcrete {
+public class PedidoFactoryConcrete 
+{
     
 }
