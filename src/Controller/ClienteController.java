@@ -6,6 +6,7 @@
 package Controller;
 
 import Facade.Cliente;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,9 +24,10 @@ public class ClienteController
     
     public List<Cliente> cmdBuscaCliente(String nome, String telefone, String endereco)
     {
-        // ToDo - Realizar busca na MEMÓRIA com os filtros específicos
-        //        No diagrama de sequencia, foi feito para buscar na MEMÓRIA
-        return null;
+        // Busca na lista de Clientes utilizando os filtros inseridos
+        List<Cliente> lstClienteBusca = Cliente.comparaFiltros(nome,telefone,endereco);
+        
+        return lstClienteBusca;
     }
     
 }

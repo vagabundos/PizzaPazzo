@@ -10,4 +10,8 @@ package Controller;
  */
 public class PedidosController
 {
+    public void cmdEfetuaPagamento(int numPed)
+    {
+        //pagarPedido(numPed);
+    }
 }

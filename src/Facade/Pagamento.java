@@ -5,10 +5,26 @@
  */
 package Facade;
 
+import static Facade.Pagamento.status.pago;
+
 /**
  *
  * @author Gauss
  */
-public class Pagamento
+public abstract class Pagamento
 {
+    float valor;
+    status sttPagamento;
+    public enum status
+    {
+        pendente,
+        pago
+    }
+    
+    public boolean pedidoPago()
+    {
+        return (sttPagamento == pago);
+    }
+    
+    public abstract void realizaPagamento(int numPed);
 }
