@@ -5,16 +5,23 @@
  */
 package Facade;
 
+import java.util.ArrayList;
+import java.util.List;
+
+
 /**
  *
  * @author Gauss
  */
 public class Bebida extends Produto
 {
-
+    private static List<Bebida> listaBebida= new ArrayList<Bebida>();
     public Bebida(String descricao, float preco, int id)
     {
-        super(descricao, preco, id);
+        super(descricao, preco,id);
+    }
+    public static List<Bebida> getProduto(){
+        return Bebida.listaBebida;
     }
     
 }

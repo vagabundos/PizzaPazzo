@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class Sabor
 {
-    public static List<Sabor> listSabor= new ArrayList<Sabor>();
+    private static List<Sabor> listSabor= new ArrayList<Sabor>();
     private String nomeSabor;
 
     public Sabor(String nomeSabor)
@@ -33,5 +33,8 @@ public class Sabor
     }
     public void novoSabor(Sabor s1){
         Sabor.listSabor.add(s1);
+    }
+    public static List<Sabor> getSabores(){
+        return Sabor.listSabor;
     }
 }
