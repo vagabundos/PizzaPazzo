@@ -25,7 +25,8 @@ create table pizza(
 create table pizza_sabor(
     id_pizza int not null,
     id_sabor int not null,
-    primary key (id_pizza,id_sabor)
+    id_materia int not null,
+    primary key (id_pizza,id_sabor,id_materia)
 );
 
 create table bebida(
@@ -56,3 +57,21 @@ create table pedido(
     primary key (id)
 );
 
+create table materiaPrima(
+    id int not null auto_increment,
+    qtdEstoque int,
+    nome varchar(255),
+    primary key (id)
+);
+
+create table motoBoy(
+    registro int not null auto_increment,
+    nome varchar(255)
+);
+
+
+create table cartao{
+    numcard varchar(255),
+    nomeTitular varchar(255),
+    tipo varchar(255)
+};
