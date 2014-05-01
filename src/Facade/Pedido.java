@@ -6,6 +6,7 @@
 package Facade;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -14,38 +15,38 @@ import java.util.List;
  */
 public class Pedido
 {
-    static List<Pedido> lstPedidos = new ArrayList<Pedido>();
-    private List<ItemPedido> listItensPedido = null;
-    int numeroPedido;
-    String dataHoraPedido;
-    Pagamento pagamentoPedido;
-    status sttPedido;
+    // Propriedades
+    public int numeroPedido;
+    public int Cliente;
+    public List<ItemPedido> ItensPedido = null;
+    public Date dataHoraPedido;
+    public Pagamento pagamentoPedido;
+    public status sttPedido;
+    
+    // Enums
     public enum status
     {
-        aguardandoProducao,
-        emProducao,
-        despachado,
-        entregue
+        AguardandoProducao,
+        EmProducao,
+        Despachado,
+        Entregue
     }
 
+    // Métodos
     public Pedido(List<ItemPedido> listItensPedido)
     {
-        this.listItensPedido = listItensPedido;
+        this.ItensPedido = listItensPedido;
     }
 
     public Pedido()
     {
-        this.listItensPedido = new ArrayList<ItemPedido>();
+        this.ItensPedido = new ArrayList<>();
     }
     
     public boolean pagarPedido(int numPed)
     {
         try
-        {
-            // Verifica se o pedido realmente existe
-            if (!existePedido(numPed))
-                throw new Exception("O pedido " + numPed + " não existe.");
-            
+        {   
             // Verifica se o pedido já foi pago
             if (pagamentoPedido.pedidoPago())
                 throw new Exception("O pedido " + numPed + " já foi pago anteriormente.");
@@ -60,14 +61,5 @@ public class Pedido
         }
         
         return true;
-    }
-
-    // Verifica se um determinado pedido existe no sistema
-    private boolean existePedido(int numPed)
-    {
-        for(Pedido ped: lstPedidos)
-            if (ped.numeroPedido == numPed)
-                return true;
-        return false;
     }
 }

@@ -6,24 +6,31 @@
 package Facade;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
  *
  * @author Gauss
  */
-public class Entrega
-{
+public class Entrega {
 
-    private List<Pedido> listaPedido = null;
+    private int ID;
+    private List<Integer> Pedidos;
+    private Date dataEntrega;
+    private boolean entregaRealizada;
 
-    public Entrega()
-    {
-        this.listaPedido = new ArrayList<Pedido>();
+    public Entrega() {
+        this.ID = -1;
+        this.dataEntrega = new Date();
+        this.entregaRealizada = false;
+        this.Pedidos = new ArrayList<>();
     }
 
-    public Entrega(List<Pedido> listaPedido)
-    {
-        this.listaPedido = listaPedido;
+    public Entrega(List<Integer> Pedidos) {
+        this.ID = -1;
+        this.dataEntrega = new Date();
+        this.entregaRealizada = false;
+        this.Pedidos = Pedidos;
     }
 }
