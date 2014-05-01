@@ -14,7 +14,7 @@ public abstract class Produto
     private String descricao;
     private float preco;
     private final int id;
-
+    
     public Produto(String descricao, float preco, int id)
     {
         this.descricao = descricao;

@@ -11,4 +11,10 @@ package Facade;
  */
 public class Dinheiro extends Pagamento
 {
+    
+    @Override
+    public void realizaPagamento(int numPed)
+    {
+        
+    }
 }
