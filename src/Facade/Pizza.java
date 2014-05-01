@@ -5,12 +5,18 @@
  */
 package Facade;
 
+import java.util.ArrayList;
+import java.util.List;
+
+
+
 /**
  *
  * @author Gauss
  */
 public class Pizza extends Produto
 {
+    private static List <Pizza> listaPizza = new ArrayList<Pizza>();
      private Sabor sabor1;
      private Sabor sabor2;
     public Pizza(String descricao, float preco, int id,Sabor sabor1,Sabor sabor2)
@@ -37,5 +43,8 @@ public class Pizza extends Produto
     public void setSabor2(Sabor sabor2)
     {
         this.sabor2 = sabor2;
+    }
+    public static List<Pizza> getProduto(){
+        return Pizza.listaPizza;
     }
 }

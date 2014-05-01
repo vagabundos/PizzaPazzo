@@ -30,5 +30,4 @@ public class ItemPedido {
         Produto prod = new Bebida(decricao, preco, id);
         return prod;
     }
-
 }
