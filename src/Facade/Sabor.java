@@ -5,10 +5,33 @@
  */
 package Facade;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author Gauss
  */
 public class Sabor
 {
+    public static List<Sabor> listSabor= new ArrayList<Sabor>();
+    private String nomeSabor;
+
+    public Sabor(String nomeSabor)
+    {
+        this.nomeSabor = nomeSabor;
+    }
+
+    public String getNomeSabor()
+    {
+        return nomeSabor;
+    }
+
+    public void setNomeSabor(String nomeSabor)
+    {
+        this.nomeSabor = nomeSabor;
+    }
+    public void novoSabor(Sabor s1){
+        Sabor.listSabor.add(s1);
+    }
 }
