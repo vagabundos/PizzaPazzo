@@ -3,33 +3,51 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package GUI;
 
-import javax.swing.BorderFactory;
-import javax.swing.border.Border;
+import Controller.ClienteController;
+import Facade.Cliente;
+import java.util.List;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Administrador
  */
-public class ctlCadProduto extends ctlBase
-{
+public class ctlCadProduto extends ctlBase {
+
     statusTela status = statusTela.Consulta;
-    enum statusTela
-    {
+
+    enum statusTela {
+
         Consulta,
         Novo,
         Edita
     }
-    
+
     /**
      * Creates new form ctlCadBase
      */
-    public ctlCadProduto(String titulo, frmMenu telaPrincipal)
-    {
-        super(titulo,telaPrincipal);
+    public ctlCadProduto(String titulo, frmMenu telaPrincipal) {
+        super(titulo, telaPrincipal);
         initComponents();
+
+        carregaTabela();
+
+        tblClientes.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent event) {
+                // do some actions here, for example
+                // print first column value from selected row
+                txtNomeCliente.setText(tblClientes.getValueAt(tblClientes.getSelectedRow(), 1).toString());
+                txtEndereco.setText(tblClientes.getValueAt(tblClientes.getSelectedRow(), 2).toString());
+                txtTelefone.setText(tblClientes.getValueAt(tblClientes.getSelectedRow(), 3).toString());
+                reavaliaBotoes(statusTela.Consulta);
+            }
+        });
+
+        reavaliaBotoes(statusTela.Consulta);
     }
 
     /**
@@ -39,8 +57,7 @@ public class ctlCadProduto extends ctlBase
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
         pnlBotoes = new javax.swing.JPanel();
         btnFechar = new javax.swing.JButton();
@@ -48,44 +65,50 @@ public class ctlCadProduto extends ctlBase
         btnEditar = new javax.swing.JButton();
         btnNovo = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblClientes = new javax.swing.JTable();
+        lblNomeCliente = new javax.swing.JLabel();
+        txtNomeCliente = new javax.swing.JTextField();
+        lblTelefone = new javax.swing.JLabel();
+        txtTelefone = new javax.swing.JTextField();
+        lblEndereco = new javax.swing.JLabel();
+        txtEndereco = new javax.swing.JTextField();
 
         pnlBotoes.setName("pnlBotoes"); // NOI18N
 
         btnFechar.setActionCommand("Fechar");
         btnFechar.setLabel("Fechar");
-        btnFechar.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        btnFechar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnFecharActionPerformed(evt);
             }
         });
 
         btnSalvar.setText("Salvar");
-        btnSalvar.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSalvarActionPerformed(evt);
             }
         });
 
         btnEditar.setText("Editar");
-        btnEditar.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditarActionPerformed(evt);
             }
         });
 
         btnNovo.setText("Novo");
+        btnNovo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNovoActionPerformed(evt);
+            }
+        });
 
         btnCancelar.setText("Cancelar");
-        btnCancelar.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
             }
         });
@@ -97,13 +120,13 @@ public class ctlCadProduto extends ctlBase
             .addGroup(pnlBotoesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnFechar, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -125,21 +148,98 @@ public class ctlCadProduto extends ctlBase
 
         pnlBotoesLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnCancelar, btnEditar, btnFechar, btnNovo, btnSalvar});
 
+        tblClientes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID Cliente", "Nome", "Endereço", "Telefone"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tblClientes);
+
+        lblNomeCliente.setText("Descrição");
+
+        lblTelefone.setText("Preço");
+
+        lblEndereco.setText("Endereço");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(lblTelefone)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 176, Short.MAX_VALUE))
+                            .addComponent(txtTelefone)))
+                    .addComponent(txtEndereco, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblNomeCliente)
+                    .addComponent(lblTelefone))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblEndereco)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(33, 33, 33)
-                .addComponent(pnlBotoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlBotoes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(65, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(478, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addComponent(pnlBotoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(16, 16, 16))
         );
 
         pack();
@@ -147,12 +247,25 @@ public class ctlCadProduto extends ctlBase
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnCancelarActionPerformed
     {//GEN-HEADEREND:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
+        // ToDo - Retornar campos para o default
+        if (tblClientes.getSelectedRow() == -1) {
+            txtNomeCliente.setText(null);
+            txtEndereco.setText(null);
+            txtTelefone.setText(null);
+        } else {
+            txtNomeCliente.setText(tblClientes.getValueAt(tblClientes.getSelectedRow(), 1).toString());
+            txtEndereco.setText(tblClientes.getValueAt(tblClientes.getSelectedRow(), 2).toString());
+            txtTelefone.setText(tblClientes.getValueAt(tblClientes.getSelectedRow(), 3).toString());
+        }
+
+        reavaliaBotoes(statusTela.Consulta);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnEditarActionPerformed
     {//GEN-HEADEREND:event_btnEditarActionPerformed
-        // TODO add your handling code here:
+        // ToDo - Preparar campos
+
+        reavaliaBotoes(statusTela.Edita);
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnFecharActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnFecharActionPerformed
@@ -162,39 +275,84 @@ public class ctlCadProduto extends ctlBase
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnSalvarActionPerformed
     {//GEN-HEADEREND:event_btnSalvarActionPerformed
-        // TODO add your handling code here:
+        if (status == statusTela.Novo) {
+            ClienteController.getInstance().cadastrarCliente(txtNomeCliente.getText(), txtEndereco.getText(), txtTelefone.getText());
+        } else if (status == statusTela.Edita) {
+            int IDCliente = Integer.parseInt(tblClientes.getValueAt(tblClientes.getSelectedRow(), 0).toString());
+            ClienteController.getInstance().editarCliente(IDCliente, txtNomeCliente.getText(), txtEndereco.getText(), txtTelefone.getText());
+        }
+
+        // Recarrega lista de clientes na tabela
+        carregaTabela();
+
+        reavaliaBotoes(statusTela.Consulta);
     }//GEN-LAST:event_btnSalvarActionPerformed
 
-    
+    private void btnNovoActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnNovoActionPerformed
+    {//GEN-HEADEREND:event_btnNovoActionPerformed
+        // ToDo - Preparar campos
+        reavaliaBotoes(statusTela.Novo);
+    }//GEN-LAST:event_btnNovoActionPerformed
+
     // Métodos
-    public void reavaliaBotoes(statusTela stt)
-    {
-        if (stt == statusTela.Consulta)
-        {
+    public void carregaTabela() {   // Limpa Tabelas
+        DefaultTableModel model = (DefaultTableModel) tblClientes.getModel();
+        model.getDataVector().removeAllElements();
+
+        // Obtem lista de todos os clientes cadastrados
+        List<Cliente> lstClientes = ClienteController.getInstance().cmdBuscaCliente(null, null, null);
+
+        for (Cliente cl : lstClientes) {
+            List<Object> lstDados = ClienteController.getInstance().getDados(cl);
+            model.addRow(new Object[]{lstDados.get(0).toString(), lstDados.get(1).toString(), lstDados.get(2).toString(), lstDados.get(3).toString()});
+        }
+
+        // Refresh
+        revalidate();
+    }
+
+    public void reavaliaBotoes(statusTela stt) {
+        if (stt == statusTela.Consulta) {
             btnFechar.setEnabled(true);
             btnSalvar.setEnabled(false);
-            btnEditar.setEnabled(true);
             btnNovo.setEnabled(true);
             btnCancelar.setEnabled(false);
+            txtEndereco.setEnabled(false);
+            txtNomeCliente.setEnabled(false);
+            txtTelefone.setEnabled(false);
+            if (tblClientes.getSelectedRow() == -1) {
+                btnEditar.setEnabled(false);
+            } else {
+                btnEditar.setEnabled(true);
+            }
         }
-        
-        if (stt == statusTela.Novo)
-        {
+
+        if (stt == statusTela.Novo) {
             btnFechar.setEnabled(true);
             btnSalvar.setEnabled(true);
             btnEditar.setEnabled(false);
             btnNovo.setEnabled(false);
             btnCancelar.setEnabled(true);
+            txtEndereco.setEnabled(true);
+            txtNomeCliente.setEnabled(true);
+            txtTelefone.setEnabled(true);
+            txtNomeCliente.setText(null);
+            txtEndereco.setText(null);
+            txtTelefone.setText(null);
         }
-        
-        if (stt == statusTela.Edita)
-        {
+
+        if (stt == statusTela.Edita) {
             btnFechar.setEnabled(true);
             btnSalvar.setEnabled(true);
             btnEditar.setEnabled(false);
             btnNovo.setEnabled(false);
             btnCancelar.setEnabled(true);
+            txtEndereco.setEnabled(true);
+            txtNomeCliente.setEnabled(true);
+            txtTelefone.setEnabled(true);
         }
+        // Atualiza STatus da Tela
+        status = stt;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -203,6 +361,15 @@ public class ctlCadProduto extends ctlBase
     private javax.swing.JButton btnFechar;
     private javax.swing.JButton btnNovo;
     private javax.swing.JButton btnSalvar;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblEndereco;
+    private javax.swing.JLabel lblNomeCliente;
+    private javax.swing.JLabel lblTelefone;
     private javax.swing.JPanel pnlBotoes;
+    private javax.swing.JTable tblClientes;
+    private javax.swing.JTextField txtEndereco;
+    private javax.swing.JTextField txtNomeCliente;
+    private javax.swing.JTextField txtTelefone;
     // End of variables declaration//GEN-END:variables
 }
