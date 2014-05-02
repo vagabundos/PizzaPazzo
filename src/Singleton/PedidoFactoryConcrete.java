@@ -6,21 +6,25 @@ import Facade.Pedido;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class PedidoFactoryConcrete implements FactoryClone {
+public final class PedidoFactoryConcrete implements FactoryClone
+{
 
     private List<Pedido> lstPedidos;
     private final static PedidoFactoryConcrete FactoryPedido = new PedidoFactoryConcrete();
 
-    private PedidoFactoryConcrete() {
+    private PedidoFactoryConcrete()
+    {
         CarregaPedidos();
     }
 
-    public PedidoFactoryConcrete getFactory() {
+    public static synchronized PedidoFactoryConcrete getFactory()
+    {
         return FactoryPedido;
     }
 
     @Override
-    public Object getClone(Object obj) {
+    public Object getClone(Object obj)
+    {
         Pedido objPed = (Pedido) obj;
         Pedido clonePedido = new Pedido();
 
@@ -31,7 +35,8 @@ public final class PedidoFactoryConcrete implements FactoryClone {
 
         // Clona ItensPedido
         clonePedido.ItensPedido = new ArrayList<>();
-        for (ItemPedido objItemPed : objPed.ItensPedido) {
+        for (ItemPedido objItemPed : objPed.ItensPedido)
+        {
             ItemPedido cloneItemPed = new ItemPedido();
             cloneItemPed.ID = objItemPed.ID;
             cloneItemPed.objProduto = objItemPed.objProduto;
@@ -40,33 +45,40 @@ public final class PedidoFactoryConcrete implements FactoryClone {
         return clonePedido;
     }
 
-    private void CarregaPedidos() {
+    private void CarregaPedidos()
+    {
         // Carrega Pedidos do banco de dados
         FactoryPedido.lstPedidos = new ArrayList<>();
     }
 
     // Verifica se um determinado pedido existe no sistema
-    public boolean existePedido(int numPed) {
-        for (Pedido ped : FactoryPedido.lstPedidos) {
-            if (ped.numeroPedido == numPed) {
+    public boolean existePedido(int numPed)
+    {
+        for (Pedido ped : FactoryPedido.lstPedidos)
+        {
+            if (ped.numeroPedido == numPed)
+            {
                 return true;
             }
         }
         return false;
     }
 
-    public Pedido criaPedido() {
-        Pedido objPedido = new Pedido();
-        objPedido.numeroPedido = -1;
-        return objPedido;
+    public Pedido criaPedido()
+    {
+        return new Pedido();
     }
-
-    public Pedido getInstance(int NumeroPedido) {
+    
+    public Pedido getInstance(int NumeroPedido)
+    {
         Pedido objPedido = null;
 
-        if (existePedido(NumeroPedido)) {
-            for (Pedido Ped : FactoryPedido.lstPedidos) {
-                if (Ped.numeroPedido == NumeroPedido) {
+        if (existePedido(NumeroPedido))
+        {
+            for (Pedido Ped : FactoryPedido.lstPedidos)
+            {
+                if (Ped.numeroPedido == NumeroPedido)
+                {
                     objPedido = Ped;
                 }
             }
@@ -74,11 +86,14 @@ public final class PedidoFactoryConcrete implements FactoryClone {
         return objPedido;
     }
 
-    public Pedido[] getInstance(Cliente objCliente) {
+    public Pedido[] getInstance(Cliente objCliente)
+    {
         List<Pedido> lstPedido = new ArrayList<>();
 
-        for (Pedido Ped : FactoryPedido.lstPedidos) {
-            if (Ped.Cliente == objCliente.ID) {
+        for (Pedido Ped : FactoryPedido.lstPedidos)
+        {
+            if (Ped.Cliente == objCliente.ID)
+            {
                 lstPedido.add(Ped);
             }
         }

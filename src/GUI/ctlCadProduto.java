@@ -13,7 +13,7 @@ import javax.swing.border.Border;
  *
  * @author Administrador
  */
-public class ctlCadCliente extends ctlBase
+public class ctlCadProduto extends ctlBase
 {
     statusTela status = statusTela.Consulta;
     enum statusTela
@@ -26,12 +26,10 @@ public class ctlCadCliente extends ctlBase
     /**
      * Creates new form ctlCadBase
      */
-    public ctlCadCliente(String titulo, frmMenu telaPrincipal)
+    public ctlCadProduto(String titulo, frmMenu telaPrincipal)
     {
         super(titulo,telaPrincipal);
         initComponents();
-        
-        reavaliaBotoes(statusTela.Consulta);
     }
 
     /**
@@ -82,13 +80,6 @@ public class ctlCadCliente extends ctlBase
         });
 
         btnNovo.setText("Novo");
-        btnNovo.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                btnNovoActionPerformed(evt);
-            }
-        });
 
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener()
@@ -134,8 +125,6 @@ public class ctlCadCliente extends ctlBase
 
         pnlBotoesLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnCancelar, btnEditar, btnFechar, btnNovo, btnSalvar});
 
-        btnFechar.getAccessibleContext().setAccessibleName("Fechar");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -158,16 +147,12 @@ public class ctlCadCliente extends ctlBase
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnCancelarActionPerformed
     {//GEN-HEADEREND:event_btnCancelarActionPerformed
-        // ToDo - Retornar campos para o default
-        
-        reavaliaBotoes(statusTela.Consulta);
+        // TODO add your handling code here:
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnEditarActionPerformed
     {//GEN-HEADEREND:event_btnEditarActionPerformed
-        // ToDo - Preparar campos
-        
-        reavaliaBotoes(statusTela.Edita);
+        // TODO add your handling code here:
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnFecharActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnFecharActionPerformed
@@ -177,18 +162,10 @@ public class ctlCadCliente extends ctlBase
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnSalvarActionPerformed
     {//GEN-HEADEREND:event_btnSalvarActionPerformed
-        // ToDo - Salva
-        
-        reavaliaBotoes(statusTela.Consulta);
+        // TODO add your handling code here:
     }//GEN-LAST:event_btnSalvarActionPerformed
 
-    private void btnNovoActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnNovoActionPerformed
-    {//GEN-HEADEREND:event_btnNovoActionPerformed
-        // ToDo - Preparar campos
-        
-        reavaliaBotoes(statusTela.Novo);
-    }//GEN-LAST:event_btnNovoActionPerformed
-
+    
     // Métodos
     public void reavaliaBotoes(statusTela stt)
     {

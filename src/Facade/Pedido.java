@@ -33,13 +33,10 @@ public class Pedido
     }
 
     // Métodos
-    public Pedido(List<ItemPedido> listItensPedido)
-    {
-        this.ItensPedido = listItensPedido;
-    }
-
     public Pedido()
     {
+        // Seta numeroPedido como -1, pois define o numero real do pedido no momento de gravar no banco
+        this.numeroPedido = -1;
         this.ItensPedido = new ArrayList<>();
     }
     

@@ -20,6 +20,8 @@ public class ClienteController
         Cliente cl = new Cliente(nome,telefone,endereco);
         
         // ToDo - Salvar cliente no banco
+        
+        cl.salvaCliente();
     }
     
     public List<Cliente> cmdBuscaCliente(String nome, String telefone, String endereco)

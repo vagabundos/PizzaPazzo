@@ -3,24 +3,80 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package GUI;
 
-import java.awt.Dimension;
+import java.awt.event.*;
+import java.beans.PropertyVetoException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.*;
 
 /**
  *
- * @author Alan Birbrier
+ * @author Administrador
  */
-public class frmMenu extends javax.swing.JFrame {
+public class frmMenu extends javax.swing.JFrame implements ActionListener
+{
+
+    //cria barra de menu                             
+    private JMenuBar jmPrincipal = new JMenuBar();
+
+    //cria menu "cadastro" na barra de menu
+    private JMenu jmOperacao = new JMenu("Operação");
+    private JMenu jmFaturamento = new JMenu("Faturamento");
+    private JMenu jmBancoDeDados = new JMenu("Banco de Dados");
+
+    //cria item "cliente" dentro do menu "cadastro"
+    private JMenuItem jmPedido = new JMenuItem("Pedido");
+    private JMenuItem jmReceberPedidosPendentes = new JMenuItem("Receber Pedidos Pendentes");
+    private JMenuItem jmRealizarEntrega = new JMenuItem("Realizar Entrega");
+    private JMenuItem jmCadCliente = new JMenuItem("Cadastrar Cliente");
+    private JMenuItem jmCadProduto = new JMenuItem("Cadastrar Produto");
+    private JMenuItem jmEfetuarPagamento = new JMenuItem("Efetuar Pagamento");
+
+    //cria objeto jdPane, do tipo JDesktopPane. Ele vai dentro d JFrame
+    public JDesktopPane jdPane = new JDesktopPane();
+
+    static ctlBase ctlTela = null;
+    ctlBase ctlCadCliente, ctlPedido, ctlCadProduto, ctlEfetuarPagamento;
+    ctlBase ctlReceberPedidosPendentes, ctlRealizarEntrega;
 
     /**
-     * Creates new form frmMenu
+     * Creates new form frmMenuTeste
      */
-    public frmMenu() {
-        initComponents();
-        this.setLocationRelativeTo(null);
-        this.setTitle("Menu");
+    public frmMenu()
+    {
+        //"pegue o conteúdo do painel" - adiciona o jDesktopPane ao JFrame (janela principal
+        getContentPane().add(jdPane);
+
+        //adiciona os menus à barra de menus (jmPrincipal)
+        jmPrincipal.add(jmOperacao);
+        jmPrincipal.add(jmFaturamento);
+        jmPrincipal.add(jmBancoDeDados);
+
+        //adiciona os itens aos respectivos menus
+        jmOperacao.add(jmPedido);
+        jmOperacao.add(jmReceberPedidosPendentes);
+        jmOperacao.add(jmRealizarEntrega);
+        jmFaturamento.add(jmEfetuarPagamento);
+        jmBancoDeDados.add(jmCadCliente);
+        jmBancoDeDados.add(jmCadProduto);
+
+        //"ajusta" a barra de menu dentro da janela principal
+        setJMenuBar(jmPrincipal);
+
+        //adiciona actionlistener aos itens do menu para que os eventos sejam tratados
+        jmPedido.addActionListener(this);
+        jmReceberPedidosPendentes.addActionListener(this);
+        jmRealizarEntrega.addActionListener(this);
+        jmEfetuarPagamento.addActionListener(this);
+        jmCadCliente.addActionListener(this);
+        jmCadProduto.addActionListener(this);
+
+        setSize(800, 600);
+        setResizable(false);
+        setVisible(true);
+        //initComponents();
     }
 
     /**
@@ -30,109 +86,197 @@ public class frmMenu extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
-
-        ctlTela = new javax.swing.JFrame();
-        menuBar = new javax.swing.JMenuBar();
-        mOperacao = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        mCadastro = new javax.swing.JMenu();
-
-        javax.swing.GroupLayout ctlTelaLayout = new javax.swing.GroupLayout(ctlTela.getContentPane());
-        ctlTela.getContentPane().setLayout(ctlTelaLayout);
-        ctlTelaLayout.setHorizontalGroup(
-            ctlTelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        ctlTelaLayout.setVerticalGroup(
-            ctlTelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+    private void initComponents()
+    {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setFocusTraversalPolicyProvider(true);
-        setMaximumSize(new java.awt.Dimension(800, 600));
-        setMinimumSize(new java.awt.Dimension(800, 600));
-        setPreferredSize(new java.awt.Dimension(800, 600));
-        setResizable(false);
-
-        mOperacao.setText("Operação");
-
-        jMenuItem1.setText("Pedido");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
-            }
-        });
-        mOperacao.add(jMenuItem1);
-
-        menuBar.add(mOperacao);
-
-        mCadastro.setText("Banco de Dados");
-        menuBar.add(mCadastro);
-
-        setJMenuBar(menuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 800, Short.MAX_VALUE)
+            .addGap(0, 400, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 576, Short.MAX_VALUE)
+            .addGap(0, 300, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        // TODO add your handling code here:
-        ctlTela = new ctlCadCliente();
-        ctlTela.setVisible(true);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
-
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String args[])
+    {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+        try
+        {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels())
+            {
+                if ("Nimbus".equals(info.getName()))
+                {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
+        } catch (ClassNotFoundException ex)
+        {
             java.util.logging.Logger.getLogger(frmMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
+        } catch (InstantiationException ex)
+        {
             java.util.logging.Logger.getLogger(frmMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
+        } catch (IllegalAccessException ex)
+        {
             java.util.logging.Logger.getLogger(frmMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (javax.swing.UnsupportedLookAndFeelException ex)
+        {
             java.util.logging.Logger.getLogger(frmMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
+        java.awt.EventQueue.invokeLater(new Runnable()
+        {
+            public void run()
+            {
                 new frmMenu().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JFrame ctlTela;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenu mCadastro;
-    private javax.swing.JMenu mOperacao;
-    private javax.swing.JMenuBar menuBar;
     // End of variables declaration//GEN-END:variables
+    @Override
+    public void actionPerformed(ActionEvent evt)
+    {
+        if (evt.getSource() == jmPedido)
+        {
+            if (ctlTela == null)
+            {
+                try
+                {
+                    ctlPedido = new ctlBase("Pedido", this);
+                    ctlPedido.setMaximum(true);
+                    ctlTela = ctlPedido;
+                } catch (PropertyVetoException ex)
+                {
+                    Logger.getLogger(frmMenu.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            
+            if (ctlPedido != null)
+                jdPane.moveToFront(ctlPedido);
+        }
+        
+        if (evt.getSource() == jmReceberPedidosPendentes)
+        {
+            if (ctlTela == null)
+            {
+                try
+                {
+                    ctlReceberPedidosPendentes = new ctlBase("Receber Pedidos Pendentes", this);
+                    ctlReceberPedidosPendentes.setMaximum(true);
+                    ctlTela = ctlReceberPedidosPendentes;
+                } catch (PropertyVetoException ex)
+                {
+                    Logger.getLogger(frmMenu.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            
+            if (ctlReceberPedidosPendentes != null)
+                jdPane.moveToFront(ctlReceberPedidosPendentes);
+        }
+        
+        if (evt.getSource() == jmRealizarEntrega)
+        {
+            if (ctlTela == null)
+            {
+                try
+                {
+                    ctlRealizarEntrega = new ctlBase("Realizar Entrega", this);
+                    ctlRealizarEntrega.setMaximum(true);
+                    ctlTela = ctlRealizarEntrega;
+                } catch (PropertyVetoException ex)
+                {
+                    Logger.getLogger(frmMenu.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            
+            if (ctlRealizarEntrega != null)
+                jdPane.moveToFront(ctlRealizarEntrega);
+        }
+
+        if (evt.getSource() == jmEfetuarPagamento)
+        {
+            if (ctlTela == null)
+            {
+                try
+                {
+                    ctlEfetuarPagamento = new ctlBase("Efetuar Pagamento", this);
+                    ctlEfetuarPagamento.setMaximum(true);
+                    ctlTela = ctlEfetuarPagamento;
+                } catch (PropertyVetoException ex)
+                {
+                    Logger.getLogger(frmMenu.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (ctlEfetuarPagamento != null)
+                jdPane.moveToFront(ctlEfetuarPagamento);
+        }
+        
+        //se o evento capturado for uma chamada vinda do item cliente do menu...
+        if (evt.getSource() == jmCadCliente)
+        {
+            //se não for null, a tela já está visível, tendo apenas que ser "levada pra frente"
+            if (ctlTela == null)
+            //instancia a tela de cadastro de clientes
+            {
+                try
+                {
+                    ctlCadCliente = new ctlCadCliente("Cadastro de Cliente", this);
+                    ctlCadCliente.setMaximum(true);
+                    ctlTela = ctlCadCliente;
+                } catch (PropertyVetoException ex)
+                {
+                    Logger.getLogger(frmMenu.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+            if (ctlCadCliente != null)
+                jdPane.moveToFront(ctlCadCliente);
+        }
+
+        // mesmo anterior, porém, ocorre quando o evento vêm do item fornecedor do menu...
+        if (evt.getSource() == jmCadProduto)
+        {
+            if (ctlTela == null)
+            {
+                try
+                {
+                    ctlCadProduto = new ctlCadCliente("Cadastro de Produto", this);
+                    ctlCadProduto.setMaximum(true);
+                    ctlTela = ctlCadProduto;
+                } catch (PropertyVetoException ex)
+                {
+                    Logger.getLogger(frmMenu.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (ctlCadProduto != null)
+                jdPane.moveToFront(ctlCadProduto);
+        }
+        
+    }
+
+    public static void setCtlTela(ctlBase ctlTela)
+    {
+        frmMenu.ctlTela = ctlTela;
+    }
+    
+    
 }

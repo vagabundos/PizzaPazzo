@@ -13,21 +13,23 @@ import java.util.List;
  *
  * @author Gauss
  */
-public class Entrega {
-
+public class Entrega
+{
     private int ID;
     private List<Integer> Pedidos;
     private Date dataEntrega;
     private boolean entregaRealizada;
 
-    public Entrega() {
+    public Entrega()
+    {
         this.ID = -1;
         this.dataEntrega = new Date();
         this.entregaRealizada = false;
         this.Pedidos = new ArrayList<>();
     }
 
-    public Entrega(List<Integer> Pedidos) {
+    public Entrega(List<Integer> Pedidos)
+    {
         this.ID = -1;
         this.dataEntrega = new Date();
         this.entregaRealizada = false;
