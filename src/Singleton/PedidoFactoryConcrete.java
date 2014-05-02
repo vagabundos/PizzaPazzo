@@ -14,7 +14,7 @@ public final class PedidoFactoryConcrete implements FactoryClone
 
     private PedidoFactoryConcrete()
     {
-        CarregaPedidos();
+        CarregaPedidos(this);
     }
 
     public static synchronized PedidoFactoryConcrete getFactory()
@@ -45,10 +45,10 @@ public final class PedidoFactoryConcrete implements FactoryClone
         return clonePedido;
     }
 
-    private void CarregaPedidos()
+    private void CarregaPedidos(PedidoFactoryConcrete objFactory)
     {
         // Carrega Pedidos do banco de dados
-        FactoryPedido.lstPedidos = new ArrayList<>();
+        objFactory.lstPedidos = new ArrayList<>();
     }
 
     // Verifica se um determinado pedido existe no sistema
