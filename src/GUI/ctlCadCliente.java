@@ -16,13 +16,11 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Administrador
  */
-public class ctlCadCliente extends ctlBase
-{
+public class ctlCadCliente extends ctlBase {
 
     statusTela status = statusTela.Consulta;
 
-    enum statusTela
-    {
+    enum statusTela {
 
         Consulta,
         Novo,
@@ -32,17 +30,14 @@ public class ctlCadCliente extends ctlBase
     /**
      * Creates new form ctlCadBase
      */
-    public ctlCadCliente(String titulo, frmMenu telaPrincipal)
-    {
+    public ctlCadCliente(String titulo, frmMenu telaPrincipal) {
         super(titulo, telaPrincipal);
         initComponents();
 
         carregaTabela();
-        
-        tblClientes.getSelectionModel().addListSelectionListener(new ListSelectionListener()
-        {
-            public void valueChanged(ListSelectionEvent event)
-            {
+
+        tblClientes.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent event) {
                 // do some actions here, for example
                 // print first column value from selected row
                 txtNomeCliente.setText(tblClientes.getValueAt(tblClientes.getSelectedRow(), 1).toString());
@@ -271,27 +266,23 @@ public class ctlCadCliente extends ctlBase
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnCancelarActionPerformed
     {//GEN-HEADEREND:event_btnCancelarActionPerformed
         // ToDo - Retornar campos para o default
-        if (tblClientes.getSelectedRow() == -1)
-        {
+        if (tblClientes.getSelectedRow() == -1) {
             txtNomeCliente.setText(null);
             txtEndereco.setText(null);
             txtTelefone.setText(null);
-        }
-        else
-        {
+        } else {
             txtNomeCliente.setText(tblClientes.getValueAt(tblClientes.getSelectedRow(), 1).toString());
             txtEndereco.setText(tblClientes.getValueAt(tblClientes.getSelectedRow(), 2).toString());
             txtTelefone.setText(tblClientes.getValueAt(tblClientes.getSelectedRow(), 3).toString());
         }
-        
-        
+
         reavaliaBotoes(statusTela.Consulta);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnEditarActionPerformed
     {//GEN-HEADEREND:event_btnEditarActionPerformed
         // ToDo - Preparar campos
-        
+
         reavaliaBotoes(statusTela.Edita);
     }//GEN-LAST:event_btnEditarActionPerformed
 
@@ -302,11 +293,16 @@ public class ctlCadCliente extends ctlBase
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnSalvarActionPerformed
     {//GEN-HEADEREND:event_btnSalvarActionPerformed
-        ClienteController.getInstance().cadastrarCliente(txtNomeCliente.getText(), txtEndereco.getText(), txtTelefone.getText());
+        if (status == statusTela.Novo) {
+            ClienteController.getInstance().cadastrarCliente(txtNomeCliente.getText(), txtEndereco.getText(), txtTelefone.getText());
+        } else if (status == statusTela.Edita) {
+            int IDCliente = Integer.parseInt(tblClientes.getValueAt(tblClientes.getSelectedRow(), 0).toString());
+            ClienteController.getInstance().editarCliente(IDCliente, txtNomeCliente.getText(), txtEndereco.getText(), txtTelefone.getText());
+        }
 
         // Recarrega lista de clientes na tabela
         carregaTabela();
-        
+
         reavaliaBotoes(statusTela.Consulta);
     }//GEN-LAST:event_btnSalvarActionPerformed
 
@@ -317,27 +313,24 @@ public class ctlCadCliente extends ctlBase
     }//GEN-LAST:event_btnNovoActionPerformed
 
     // Métodos
-    public void carregaTabela()
-    {
+    public void carregaTabela() {   // Limpa Tabelas
         DefaultTableModel model = (DefaultTableModel) tblClientes.getModel();
-        
-        // Limpa tabela
-        model.setRowCount(0);
-        
+        model.getDataVector().removeAllElements();
+
         // Obtem lista de todos os clientes cadastrados
         List<Cliente> lstClientes = ClienteController.getInstance().cmdBuscaCliente(null, null, null);
-        
-        for(Cliente cl : lstClientes)
-        {
+
+        for (Cliente cl : lstClientes) {
             List<Object> lstDados = ClienteController.getInstance().getDados(cl);
-            model.addRow(new Object[]{ lstDados.get(0).toString(), lstDados.get(1).toString(), lstDados.get(2).toString(), lstDados.get(3).toString() });
+            model.addRow(new Object[]{lstDados.get(0).toString(), lstDados.get(1).toString(), lstDados.get(2).toString(), lstDados.get(3).toString()});
         }
+
+        // Refresh
+        revalidate();
     }
-    
-    public void reavaliaBotoes(statusTela stt)
-    {
-        if (stt == statusTela.Consulta)
-        {
+
+    public void reavaliaBotoes(statusTela stt) {
+        if (stt == statusTela.Consulta) {
             btnFechar.setEnabled(true);
             btnSalvar.setEnabled(false);
             btnNovo.setEnabled(true);
@@ -345,14 +338,14 @@ public class ctlCadCliente extends ctlBase
             txtEndereco.setEnabled(false);
             txtNomeCliente.setEnabled(false);
             txtTelefone.setEnabled(false);
-            if (tblClientes.getSelectedRow() == -1)
+            if (tblClientes.getSelectedRow() == -1) {
                 btnEditar.setEnabled(false);
-            else
+            } else {
                 btnEditar.setEnabled(true);
+            }
         }
 
-        if (stt == statusTela.Novo)
-        {
+        if (stt == statusTela.Novo) {
             btnFechar.setEnabled(true);
             btnSalvar.setEnabled(true);
             btnEditar.setEnabled(false);
@@ -366,8 +359,7 @@ public class ctlCadCliente extends ctlBase
             txtTelefone.setText(null);
         }
 
-        if (stt == statusTela.Edita)
-        {
+        if (stt == statusTela.Edita) {
             btnFechar.setEnabled(true);
             btnSalvar.setEnabled(true);
             btnEditar.setEnabled(false);
@@ -377,6 +369,8 @@ public class ctlCadCliente extends ctlBase
             txtNomeCliente.setEnabled(true);
             txtTelefone.setEnabled(true);
         }
+        // Atualiza STatus da Tela
+        status = stt;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

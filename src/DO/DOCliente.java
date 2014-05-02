@@ -5,6 +5,8 @@
  */
 package DO;
 
+import Facade.Cliente;
+
 /**
  *
  * @author Administrador
@@ -12,8 +14,13 @@ package DO;
 public class DOCliente
 {
 
-    public void salva()
+    public void salva(Cliente objCliente)
     {
-        
+        // Inser das propriedades do Cliente
+    }
+    
+    public void edita(Cliente objCliente)
+    {
+        // Update das propriedades do Cliente
     }
 }

@@ -70,10 +70,16 @@ public class Cliente implements Comparable<Cliente>
     {
         // ToDo - Grava cliente no banco
         DOCliente DOcl = new DOCliente();
-        DOcl.salva();
+        DOcl.salva(this);
         
         // Insere cliente na lista de memória
         lstCliente.add(this);
+    }
+    
+    public void editaCliente()
+    {
+        DOCliente DOcl = new DOCliente();
+        DOcl.edita(this);
     }
 
     public static List<Cliente> getLstCliente()
