@@ -22,6 +22,16 @@ public class Sabor
     {
         this.nomeSabor = nomeSabor;
     }
+    
+    public Sabor()
+    {
+        
+    }
+    
+    public void novoSabor()
+    {
+        // ToDo - Criar novo sabor
+    }
 
     public String getNomeSabor()
     {

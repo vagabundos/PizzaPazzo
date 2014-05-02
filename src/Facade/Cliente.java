@@ -17,6 +17,7 @@ public class Cliente implements Comparable<Cliente>
 {
 
     static List<Cliente> lstCliente = new ArrayList<Cliente>();
+    static int testeCont = 0;
 
     public int ID;
     public String nome;
@@ -72,6 +73,9 @@ public class Cliente implements Comparable<Cliente>
         DOCliente DOcl = new DOCliente();
         DOcl.salva(this);
         
+        this.ID = testeCont;
+        testeCont += 1;
+        
         // Insere cliente na lista de memória
         lstCliente.add(this);
     }
@@ -80,6 +84,15 @@ public class Cliente implements Comparable<Cliente>
     {
         DOCliente DOcl = new DOCliente();
         DOcl.edita(this);
+    }
+    
+    public void ApagaCliente()
+    {
+        DOCliente DOcl = new DOCliente();
+        DOcl.edita(this);
+        
+        lstCliente.remove(this);
+        
     }
 
     public static List<Cliente> getLstCliente()
@@ -131,5 +144,5 @@ public class Cliente implements Comparable<Cliente>
     {
         this.endereco = endereco;
     }
-
+    
 }

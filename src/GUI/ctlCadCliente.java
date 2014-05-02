@@ -16,11 +16,13 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Administrador
  */
-public class ctlCadCliente extends ctlBase {
+public class ctlCadCliente extends ctlBase
+{
 
     statusTela status = statusTela.Consulta;
 
-    enum statusTela {
+    enum statusTela
+    {
 
         Consulta,
         Novo,
@@ -30,14 +32,17 @@ public class ctlCadCliente extends ctlBase {
     /**
      * Creates new form ctlCadBase
      */
-    public ctlCadCliente(String titulo, frmMenu telaPrincipal) {
+    public ctlCadCliente(String titulo, frmMenu telaPrincipal)
+    {
         super(titulo, telaPrincipal);
         initComponents();
 
         carregaTabela();
 
-        tblClientes.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            public void valueChanged(ListSelectionEvent event) {
+        tblClientes.getSelectionModel().addListSelectionListener(new ListSelectionListener()
+        {
+            public void valueChanged(ListSelectionEvent event)
+            {
                 // do some actions here, for example
                 // print first column value from selected row
                 txtNomeCliente.setText(tblClientes.getValueAt(tblClientes.getSelectedRow(), 1).toString());
@@ -66,6 +71,7 @@ public class ctlCadCliente extends ctlBase {
         btnEditar = new javax.swing.JButton();
         btnNovo = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        btnApagar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblClientes = new javax.swing.JTable();
@@ -124,6 +130,15 @@ public class ctlCadCliente extends ctlBase {
             }
         });
 
+        btnApagar.setText("Apagar");
+        btnApagar.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnApagarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlBotoesLayout = new javax.swing.GroupLayout(pnlBotoes);
         pnlBotoes.setLayout(pnlBotoesLayout);
         pnlBotoesLayout.setHorizontalGroup(
@@ -139,25 +154,28 @@ public class ctlCadCliente extends ctlBase {
                 .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnApagar)
                 .addContainerGap())
         );
 
-        pnlBotoesLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnCancelar, btnEditar, btnFechar, btnNovo, btnSalvar});
+        pnlBotoesLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnApagar, btnCancelar, btnEditar, btnFechar, btnNovo, btnSalvar});
 
         pnlBotoesLayout.setVerticalGroup(
             pnlBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlBotoesLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(pnlBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnFechar, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnSalvar, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnEditar, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnNovo, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnCancelar, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGroup(pnlBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnFechar)
+                    .addComponent(btnSalvar)
+                    .addComponent(btnEditar)
+                    .addComponent(btnNovo)
+                    .addComponent(btnCancelar)
+                    .addComponent(btnApagar))
                 .addContainerGap())
         );
 
-        pnlBotoesLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnCancelar, btnEditar, btnFechar, btnNovo, btnSalvar});
+        pnlBotoesLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnApagar, btnCancelar, btnEditar, btnFechar, btnNovo, btnSalvar});
 
         tblClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][]
@@ -207,7 +225,7 @@ public class ctlCadCliente extends ctlBase {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -266,11 +284,13 @@ public class ctlCadCliente extends ctlBase {
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnCancelarActionPerformed
     {//GEN-HEADEREND:event_btnCancelarActionPerformed
         // ToDo - Retornar campos para o default
-        if (tblClientes.getSelectedRow() == -1) {
+        if (tblClientes.getSelectedRow() == -1)
+        {
             txtNomeCliente.setText(null);
             txtEndereco.setText(null);
             txtTelefone.setText(null);
-        } else {
+        } else
+        {
             txtNomeCliente.setText(tblClientes.getValueAt(tblClientes.getSelectedRow(), 1).toString());
             txtEndereco.setText(tblClientes.getValueAt(tblClientes.getSelectedRow(), 2).toString());
             txtTelefone.setText(tblClientes.getValueAt(tblClientes.getSelectedRow(), 3).toString());
@@ -293,9 +313,11 @@ public class ctlCadCliente extends ctlBase {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnSalvarActionPerformed
     {//GEN-HEADEREND:event_btnSalvarActionPerformed
-        if (status == statusTela.Novo) {
+        if (status == statusTela.Novo)
+        {
             ClienteController.getInstance().cadastrarCliente(txtNomeCliente.getText(), txtEndereco.getText(), txtTelefone.getText());
-        } else if (status == statusTela.Edita) {
+        } else if (status == statusTela.Edita)
+        {
             int IDCliente = Integer.parseInt(tblClientes.getValueAt(tblClientes.getSelectedRow(), 0).toString());
             ClienteController.getInstance().editarCliente(IDCliente, txtNomeCliente.getText(), txtEndereco.getText(), txtTelefone.getText());
         }
@@ -312,25 +334,42 @@ public class ctlCadCliente extends ctlBase {
         reavaliaBotoes(statusTela.Novo);
     }//GEN-LAST:event_btnNovoActionPerformed
 
+    private void btnApagarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnApagarActionPerformed
+    {//GEN-HEADEREND:event_btnApagarActionPerformed
+        int IDCliente = Integer.parseInt(tblClientes.getValueAt(tblClientes.getSelectedRow(), 0).toString());
+        ClienteController.getInstance().apagarCliente(IDCliente);
+        
+        carregaTabela();
+        
+        reavaliaBotoes(statusTela.Consulta);
+    }//GEN-LAST:event_btnApagarActionPerformed
+
     // Métodos
-    public void carregaTabela() {   // Limpa Tabelas
+    public void carregaTabela()
+    {   // Limpa Tabelas
         DefaultTableModel model = (DefaultTableModel) tblClientes.getModel();
         model.getDataVector().removeAllElements();
 
         // Obtem lista de todos os clientes cadastrados
         List<Cliente> lstClientes = ClienteController.getInstance().cmdBuscaCliente(null, null, null);
 
-        for (Cliente cl : lstClientes) {
+        for (Cliente cl : lstClientes)
+        {
             List<Object> lstDados = ClienteController.getInstance().getDados(cl);
-            model.addRow(new Object[]{lstDados.get(0).toString(), lstDados.get(1).toString(), lstDados.get(2).toString(), lstDados.get(3).toString()});
+            model.addRow(new Object[]
+            {
+                lstDados.get(0).toString(), lstDados.get(1).toString(), lstDados.get(2).toString(), lstDados.get(3).toString()
+            });
         }
 
         // Refresh
         revalidate();
     }
 
-    public void reavaliaBotoes(statusTela stt) {
-        if (stt == statusTela.Consulta) {
+    public void reavaliaBotoes(statusTela stt)
+    {
+        if (stt == statusTela.Consulta)
+        {
             btnFechar.setEnabled(true);
             btnSalvar.setEnabled(false);
             btnNovo.setEnabled(true);
@@ -338,19 +377,25 @@ public class ctlCadCliente extends ctlBase {
             txtEndereco.setEnabled(false);
             txtNomeCliente.setEnabled(false);
             txtTelefone.setEnabled(false);
-            if (tblClientes.getSelectedRow() == -1) {
+            if (tblClientes.getSelectedRow() == -1)
+            {
+                btnApagar.setEnabled(false);
                 btnEditar.setEnabled(false);
-            } else {
+            } else
+            {
+                btnApagar.setEnabled(true);
                 btnEditar.setEnabled(true);
             }
         }
 
-        if (stt == statusTela.Novo) {
+        if (stt == statusTela.Novo)
+        {
             btnFechar.setEnabled(true);
             btnSalvar.setEnabled(true);
             btnEditar.setEnabled(false);
             btnNovo.setEnabled(false);
             btnCancelar.setEnabled(true);
+            btnApagar.setEnabled(false);
             txtEndereco.setEnabled(true);
             txtNomeCliente.setEnabled(true);
             txtTelefone.setEnabled(true);
@@ -359,12 +404,14 @@ public class ctlCadCliente extends ctlBase {
             txtTelefone.setText(null);
         }
 
-        if (stt == statusTela.Edita) {
+        if (stt == statusTela.Edita)
+        {
             btnFechar.setEnabled(true);
             btnSalvar.setEnabled(true);
             btnEditar.setEnabled(false);
             btnNovo.setEnabled(false);
             btnCancelar.setEnabled(true);
+            btnApagar.setEnabled(false);
             txtEndereco.setEnabled(true);
             txtNomeCliente.setEnabled(true);
             txtTelefone.setEnabled(true);
@@ -374,6 +421,7 @@ public class ctlCadCliente extends ctlBase {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnApagar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnFechar;

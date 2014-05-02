@@ -3,11 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package GUI;
 
-import javax.swing.BorderFactory;
-import javax.swing.border.Border;
+import Controller.ProdutoController;
+import java.util.List;
+import javax.swing.ButtonGroup;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -15,21 +18,53 @@ import javax.swing.border.Border;
  */
 public class ctlCadProduto extends ctlBase
 {
+    ButtonGroup btnGroupRadio;
+    
     statusTela status = statusTela.Consulta;
+    tipoCadastro tpCad = tipoCadastro.sabor;
+
+    public enum tipoCadastro
+    {
+        sabor,
+        bebida
+    }
+    
     enum statusTela
     {
         Consulta,
         Novo,
         Edita
     }
-    
+
     /**
      * Creates new form ctlCadBase
      */
     public ctlCadProduto(String titulo, frmMenu telaPrincipal)
     {
-        super(titulo,telaPrincipal);
+        super(titulo, telaPrincipal);
         initComponents();
+        
+        btnGroupRadio = new ButtonGroup();
+        btnSabor.setSelected(true);
+        btnGroupRadio.add(btnSabor);
+        btnGroupRadio.add(btnBebida);
+        
+        carregaTabela();
+
+        tblProdutos.getSelectionModel().addListSelectionListener(new ListSelectionListener()
+        {
+            public void valueChanged(ListSelectionEvent event)
+            {
+                // do some actions here, for example
+                // print first column value from selected row
+                txtNomeProduto.setText(tblProdutos.getValueAt(tblProdutos.getSelectedRow(), 1).toString());
+                txtPreco.setText(tblProdutos.getValueAt(tblProdutos.getSelectedRow(), 2).toString());
+                txtDescricao.setText(tblProdutos.getValueAt(tblProdutos.getSelectedRow(), 3).toString());
+                reavaliaBotoes(statusTela.Consulta);
+            }
+        });
+
+        reavaliaBotoes(statusTela.Consulta);
     }
 
     /**
@@ -48,6 +83,18 @@ public class ctlCadProduto extends ctlBase
         btnEditar = new javax.swing.JButton();
         btnNovo = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblProdutos = new javax.swing.JTable();
+        lblNomeCliente = new javax.swing.JLabel();
+        txtNomeProduto = new javax.swing.JTextField();
+        lblTelefone = new javax.swing.JLabel();
+        txtDescricao = new javax.swing.JTextField();
+        lblEndereco = new javax.swing.JLabel();
+        txtPreco = new javax.swing.JTextField();
+        pnlRadio = new javax.swing.JPanel();
+        btnSabor = new javax.swing.JRadioButton();
+        btnBebida = new javax.swing.JRadioButton();
 
         pnlBotoes.setName("pnlBotoes"); // NOI18N
 
@@ -80,6 +127,13 @@ public class ctlCadProduto extends ctlBase
         });
 
         btnNovo.setText("Novo");
+        btnNovo.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnNovoActionPerformed(evt);
+            }
+        });
 
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener()
@@ -97,13 +151,13 @@ public class ctlCadProduto extends ctlBase
             .addGroup(pnlBotoesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnFechar, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -125,21 +179,160 @@ public class ctlCadProduto extends ctlBase
 
         pnlBotoesLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnCancelar, btnEditar, btnFechar, btnNovo, btnSalvar});
 
+        tblProdutos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][]
+            {
+
+            },
+            new String []
+            {
+                "Nome do Produto", "Tipo", "Descrição"
+            }
+        )
+        {
+            Class[] types = new Class []
+            {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean []
+            {
+                false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex)
+            {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex)
+            {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tblProdutos);
+
+        lblNomeCliente.setText("Nome do Produto");
+
+        lblTelefone.setText("Descrição");
+
+        lblEndereco.setText("Preço");
+
+        txtPreco.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                txtPrecoActionPerformed(evt);
+            }
+        });
+
+        btnSabor.setText("Cadastrar Sabor");
+        btnSabor.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnSaborActionPerformed(evt);
+            }
+        });
+
+        btnBebida.setText("Cadastrar Bebida");
+        btnBebida.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnBebidaActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnlRadioLayout = new javax.swing.GroupLayout(pnlRadio);
+        pnlRadio.setLayout(pnlRadioLayout);
+        pnlRadioLayout.setHorizontalGroup(
+            pnlRadioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlRadioLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlRadioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnSabor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnBebida, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        pnlRadioLayout.setVerticalGroup(
+            pnlRadioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlRadioLayout.createSequentialGroup()
+                .addContainerGap(22, Short.MAX_VALUE)
+                .addComponent(btnSabor)
+                .addGap(11, 11, 11)
+                .addComponent(btnBebida)
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(lblTelefone)
+                        .addGap(543, 543, 543))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtDescricao, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(lblNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addComponent(txtNomeProduto))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(10, 10, 10)))
+                .addComponent(pnlRadio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblNomeCliente)
+                            .addComponent(lblEndereco))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtNomeProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtPreco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblTelefone)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pnlRadio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(33, 33, 33)
-                .addComponent(pnlBotoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlBotoes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(478, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addComponent(pnlBotoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(16, 16, 16))
         );
 
         pack();
@@ -147,12 +340,27 @@ public class ctlCadProduto extends ctlBase
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnCancelarActionPerformed
     {//GEN-HEADEREND:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
+        // ToDo - Retornar campos para o default
+        if (tblProdutos.getSelectedRow() == -1)
+        {
+            txtNomeProduto.setText(null);
+            txtPreco.setText(null);
+            txtDescricao.setText(null);
+        } else
+        {
+            txtNomeProduto.setText(tblProdutos.getValueAt(tblProdutos.getSelectedRow(), 1).toString());
+            txtPreco.setText(tblProdutos.getValueAt(tblProdutos.getSelectedRow(), 2).toString());
+            txtDescricao.setText(tblProdutos.getValueAt(tblProdutos.getSelectedRow(), 3).toString());
+        }
+
+        reavaliaBotoes(statusTela.Consulta);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnEditarActionPerformed
     {//GEN-HEADEREND:event_btnEditarActionPerformed
-        // TODO add your handling code here:
+        // ToDo - Preparar campos
+
+        reavaliaBotoes(statusTela.Edita);
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnFecharActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnFecharActionPerformed
@@ -162,22 +370,90 @@ public class ctlCadProduto extends ctlBase
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnSalvarActionPerformed
     {//GEN-HEADEREND:event_btnSalvarActionPerformed
-        // TODO add your handling code here:
+        if (status == statusTela.Novo)
+        {
+            ProdutoController.getInstance().cadastrarProduto(txtNomeProduto.getText(), tpCad, txtDescricao.getText(), Float.parseFloat(txtPreco.getText()));
+        } 
+        
+        /*
+        else if (status == statusTela.Edita)
+        {
+            int IDCliente = Integer.parseInt(tblProdutos.getValueAt(tblProdutos.getSelectedRow(), 0).toString());
+            ProdutoController.getInstance().editarProduto(IDCliente, txtNomeProduto.getText(), txtPreco.getText(), txtDescricao.getText());
+        }
+        */
+
+        // Recarrega lista de clientes na tabela
+        carregaTabela();
+
+        reavaliaBotoes(statusTela.Consulta);
     }//GEN-LAST:event_btnSalvarActionPerformed
 
-    
+    private void btnNovoActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnNovoActionPerformed
+    {//GEN-HEADEREND:event_btnNovoActionPerformed
+        // ToDo - Preparar campos
+        reavaliaBotoes(statusTela.Novo);
+    }//GEN-LAST:event_btnNovoActionPerformed
+
+    private void txtPrecoActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_txtPrecoActionPerformed
+    {//GEN-HEADEREND:event_txtPrecoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPrecoActionPerformed
+
+    private void btnSaborActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnSaborActionPerformed
+    {//GEN-HEADEREND:event_btnSaborActionPerformed
+        tipoCadastro tpCad = tipoCadastro.sabor;
+    }//GEN-LAST:event_btnSaborActionPerformed
+
+    private void btnBebidaActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnBebidaActionPerformed
+    {//GEN-HEADEREND:event_btnBebidaActionPerformed
+        tipoCadastro tpCad = tipoCadastro.bebida;
+    }//GEN-LAST:event_btnBebidaActionPerformed
+
     // Métodos
+    public void carregaTabela()
+    {   // Limpa Tabelas
+        DefaultTableModel model = (DefaultTableModel) tblProdutos.getModel();
+        model.getDataVector().removeAllElements();
+        
+        /*
+        // Obtem lista de todos os clientes cadastrados
+        List<Produto> lstProdutos = ProdutoController.getInstance().cmdBuscaCliente(null, null, null);
+
+        for (Produto cl : lstProdutos)
+        {
+            List<Object> lstDados = ProdutoController.getInstance().getDados(cl);
+            model.addRow(new Object[]
+            {
+                lstDados.get(0).toString(), lstDados.get(1).toString(), lstDados.get(2).toString(), lstDados.get(3).toString()
+            });
+        }
+                */
+
+        // Refresh
+        revalidate();
+    }
+
     public void reavaliaBotoes(statusTela stt)
     {
         if (stt == statusTela.Consulta)
         {
             btnFechar.setEnabled(true);
             btnSalvar.setEnabled(false);
-            btnEditar.setEnabled(true);
             btnNovo.setEnabled(true);
             btnCancelar.setEnabled(false);
+            txtPreco.setEnabled(false);
+            txtNomeProduto.setEnabled(false);
+            txtDescricao.setEnabled(false);
+            if (tblProdutos.getSelectedRow() == -1)
+            {
+                btnEditar.setEnabled(false);
+            } else
+            {
+                btnEditar.setEnabled(true);
+            }
         }
-        
+
         if (stt == statusTela.Novo)
         {
             btnFechar.setEnabled(true);
@@ -185,8 +461,14 @@ public class ctlCadProduto extends ctlBase
             btnEditar.setEnabled(false);
             btnNovo.setEnabled(false);
             btnCancelar.setEnabled(true);
+            txtPreco.setEnabled(true);
+            txtNomeProduto.setEnabled(true);
+            txtDescricao.setEnabled(true);
+            txtNomeProduto.setText(null);
+            txtPreco.setText(null);
+            txtDescricao.setText(null);
         }
-        
+
         if (stt == statusTela.Edita)
         {
             btnFechar.setEnabled(true);
@@ -194,15 +476,32 @@ public class ctlCadProduto extends ctlBase
             btnEditar.setEnabled(false);
             btnNovo.setEnabled(false);
             btnCancelar.setEnabled(true);
+            txtPreco.setEnabled(true);
+            txtNomeProduto.setEnabled(true);
+            txtDescricao.setEnabled(true);
         }
+        // Atualiza STatus da Tela
+        status = stt;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JRadioButton btnBebida;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnFechar;
     private javax.swing.JButton btnNovo;
+    private javax.swing.JRadioButton btnSabor;
     private javax.swing.JButton btnSalvar;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblEndereco;
+    private javax.swing.JLabel lblNomeCliente;
+    private javax.swing.JLabel lblTelefone;
     private javax.swing.JPanel pnlBotoes;
+    private javax.swing.JPanel pnlRadio;
+    private javax.swing.JTable tblProdutos;
+    private javax.swing.JTextField txtDescricao;
+    private javax.swing.JTextField txtNomeProduto;
+    private javax.swing.JTextField txtPreco;
     // End of variables declaration//GEN-END:variables
 }

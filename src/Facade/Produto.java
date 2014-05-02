@@ -12,17 +12,20 @@ package Facade;
 public abstract class Produto
 {
 
-    private String descricao;
-    private float preco;
-    private final int id;
+    String descricao;
+    float preco;
+    final String codigo;
 
-    public Produto(String descricao, float preco, int id)
+    public Produto(String codigo, String descricao, float preco)
     {
         this.descricao = descricao;
         this.preco = preco;
-        this.id = id;
+        this.codigo = codigo;
     }
 
+    public abstract void novoProduto();
+    
+    /*
     public Produto novoProduto(String descricao, float preco, int id, String sabor1, String sabor2)
     {
         Produto prod = null;
@@ -43,6 +46,7 @@ public abstract class Produto
         Produto prod = new Bebida(decricao, preco, id);
         return prod;
     }
+    */
 
     public String getDescricao()
     {

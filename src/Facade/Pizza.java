@@ -8,24 +8,40 @@ package Facade;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
 /**
  *
  * @author Gauss
  */
 public class Pizza extends Produto
 {
-    private static List <Pizza> listaPizza = new ArrayList<Pizza>();
-     private Sabor sabor1;
-     private Sabor sabor2;
-    public Pizza(String descricao, float preco, int id,Sabor sabor1,Sabor sabor2)
+
+    private Sabor sabor1;
+    private Sabor sabor2;
+
+    public Pizza(String codigo, String descricao, float preco, Sabor sabor1, Sabor sabor2)
     {
-        super(descricao, preco, id);
+        super(codigo, descricao, preco);
         this.sabor1 = sabor1;
-        this.sabor2 = sabor2;   
+        this.sabor2 = sabor2;
     }
-     public Sabor getSabor1()
+
+    public Pizza(String codigo, String descricao, float preco)
+    {
+        super(codigo, descricao, preco);
+    }
+    
+    @Override
+    public void novoProduto()
+    {
+        // ToDo - Chama método de Sabor para criar novo sabor
+        Sabor sb = new Sabor();
+        
+        sb.novoSabor();
+        
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public Sabor getSabor1()
     {
         return sabor1;
     }
@@ -44,7 +60,5 @@ public class Pizza extends Produto
     {
         this.sabor2 = sabor2;
     }
-    public static List<Pizza> getProduto(){
-        return Pizza.listaPizza;
-    }
+
 }

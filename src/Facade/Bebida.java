@@ -17,14 +17,22 @@ public class Bebida extends Produto
 
     private static List<Bebida> listaBebida = new ArrayList<Bebida>();
 
-    public Bebida(String descricao, float preco, int id)
+    public Bebida(String codigo, String descricao, float preco)
     {
-        super(descricao, preco, id);
+        super(codigo, descricao, preco);
     }
 
     public static List<Bebida> getProduto()
     {
         return Bebida.listaBebida;
+    }
+
+    @Override
+    public void novoProduto()
+    {
+        // ToDo - Cria nova bebida
+        
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
