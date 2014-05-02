@@ -10,13 +10,13 @@ package GUI;
  *
  * @author Administrador
  */
-public class ctlRealizarPagamento extends ctlBase
+public class ctlEfetuarPagamento extends ctlBase
 {
 
     /**
      * Creates new form ctlRealizarPagamento
      */
-    public ctlRealizarPagamento(String titulo, frmMenu telaPrincipal)
+    public ctlEfetuarPagamento(String titulo, frmMenu telaPrincipal)
     {
         super(titulo,telaPrincipal);
         initComponents();

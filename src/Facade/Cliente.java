@@ -5,6 +5,7 @@
  */
 package Facade;
 
+import DO.DOCliente;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,6 +69,8 @@ public class Cliente implements Comparable<Cliente>
     public void salvaCliente()
     {
         // ToDo - Grava cliente no banco
+        DOCliente DOcl = new DOCliente();
+        DOcl.salva();
         
         // Insere cliente na lista de memória
         lstCliente.add(this);

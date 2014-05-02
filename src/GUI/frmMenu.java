@@ -150,133 +150,42 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener
         });
     }
 
+    public void verificaTelaAberta(String nomeTela)
+    {
+        if (ctlTela == null)
+        {
+            switch (nomeTela)
+            {
+                case "Pedido": ctlTela = new ctlPedido(nomeTela,this); break;
+                case "Receber Pedidos Pendentes": ctlTela = new ctlReceberPedidosPendentes(nomeTela,this); break;
+                case "Realizar Entrega": ctlTela = new ctlRealizarEntrega(nomeTela,this); break;
+                case "Efetuar Pagamento": ctlTela = new ctlEfetuarPagamento(nomeTela,this); break;
+                case "Cadastrar Cliente": ctlTela = new ctlCadCliente(nomeTela,this); break;
+                case "Cadastrar Produto": ctlTela = new ctlCadProduto(nomeTela,this); break;
+            }
+            try
+            {
+                ctlTela.setMaximum(true);
+                jdPane.moveToFront(ctlTela);
+            } catch (PropertyVetoException ex)
+            {
+                Logger.getLogger(frmMenu.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
     @Override
     public void actionPerformed(ActionEvent evt)
     {
-        if (evt.getSource() == jmPedido)
-        {
-            if (ctlTela == null)
-            {
-                try
-                {
-                    ctlPedido = new ctlBase("Pedido", this);
-                    ctlPedido.setMaximum(true);
-                    ctlTela = ctlPedido;
-                } catch (PropertyVetoException ex)
-                {
-                    Logger.getLogger(frmMenu.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            
-            if (ctlPedido != null)
-                jdPane.moveToFront(ctlPedido);
-        }
-        
-        if (evt.getSource() == jmReceberPedidosPendentes)
-        {
-            if (ctlTela == null)
-            {
-                try
-                {
-                    ctlReceberPedidosPendentes = new ctlBase("Receber Pedidos Pendentes", this);
-                    ctlReceberPedidosPendentes.setMaximum(true);
-                    ctlTela = ctlReceberPedidosPendentes;
-                } catch (PropertyVetoException ex)
-                {
-                    Logger.getLogger(frmMenu.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            
-            if (ctlReceberPedidosPendentes != null)
-                jdPane.moveToFront(ctlReceberPedidosPendentes);
-        }
-        
-        if (evt.getSource() == jmRealizarEntrega)
-        {
-            if (ctlTela == null)
-            {
-                try
-                {
-                    ctlRealizarEntrega = new ctlBase("Realizar Entrega", this);
-                    ctlRealizarEntrega.setMaximum(true);
-                    ctlTela = ctlRealizarEntrega;
-                } catch (PropertyVetoException ex)
-                {
-                    Logger.getLogger(frmMenu.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            
-            if (ctlRealizarEntrega != null)
-                jdPane.moveToFront(ctlRealizarEntrega);
-        }
-
-        if (evt.getSource() == jmEfetuarPagamento)
-        {
-            if (ctlTela == null)
-            {
-                try
-                {
-                    ctlEfetuarPagamento = new ctlBase("Efetuar Pagamento", this);
-                    ctlEfetuarPagamento.setMaximum(true);
-                    ctlTela = ctlEfetuarPagamento;
-                } catch (PropertyVetoException ex)
-                {
-                    Logger.getLogger(frmMenu.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            if (ctlEfetuarPagamento != null)
-                jdPane.moveToFront(ctlEfetuarPagamento);
-        }
-        
-        //se o evento capturado for uma chamada vinda do item cliente do menu...
-        if (evt.getSource() == jmCadCliente)
-        {
-            //se não for null, a tela já está visível, tendo apenas que ser "levada pra frente"
-            if (ctlTela == null)
-            //instancia a tela de cadastro de clientes
-            {
-                try
-                {
-                    ctlCadCliente = new ctlCadCliente("Cadastro de Cliente", this);
-                    ctlCadCliente.setMaximum(true);
-                    ctlTela = ctlCadCliente;
-                } catch (PropertyVetoException ex)
-                {
-                    Logger.getLogger(frmMenu.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-
-            if (ctlCadCliente != null)
-                jdPane.moveToFront(ctlCadCliente);
-        }
-
-        // mesmo anterior, porém, ocorre quando o evento vêm do item fornecedor do menu...
-        if (evt.getSource() == jmCadProduto)
-        {
-            if (ctlTela == null)
-            {
-                try
-                {
-                    ctlCadProduto = new ctlCadCliente("Cadastro de Produto", this);
-                    ctlCadProduto.setMaximum(true);
-                    ctlTela = ctlCadProduto;
-                } catch (PropertyVetoException ex)
-                {
-                    Logger.getLogger(frmMenu.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            if (ctlCadProduto != null)
-                jdPane.moveToFront(ctlCadProduto);
-        }
-        
+        verificaTelaAberta(evt.getActionCommand());
     }
 
     public static void setCtlTela(ctlBase ctlTela)
     {
         frmMenu.ctlTela = ctlTela;
     }
-    
-    
+
 }
