@@ -76,4 +76,54 @@ public class Cliente implements Comparable<Cliente>
         lstCliente.add(this);
     }
 
+    public static List<Cliente> getLstCliente()
+    {
+        return lstCliente;
+    }
+
+    public static void setLstCliente(List<Cliente> lstCliente)
+    {
+        Cliente.lstCliente = lstCliente;
+    }
+
+    public int getID()
+    {
+        return ID;
+    }
+
+    public void setID(int ID)
+    {
+        this.ID = ID;
+    }
+
+    public String getNome()
+    {
+        return nome;
+    }
+
+    public void setNome(String nome)
+    {
+        this.nome = nome;
+    }
+
+    public String getTelefone()
+    {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone)
+    {
+        this.telefone = telefone;
+    }
+
+    public String getEndereco()
+    {
+        return endereco;
+    }
+
+    public void setEndereco(String endereco)
+    {
+        this.endereco = endereco;
+    }
+
 }

@@ -1,4 +1,4 @@
-package Singleton;
+package Factory;
 
 import Facade.Cliente;
 import Facade.ItemPedido;

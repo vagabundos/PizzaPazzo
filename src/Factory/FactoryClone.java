@@ -1,4 +1,4 @@
-package Singleton;
+package Factory;
 
 public interface FactoryClone
 {

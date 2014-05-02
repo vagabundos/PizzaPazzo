@@ -3,11 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package GUI;
 
-import javax.swing.BorderFactory;
-import javax.swing.border.Border;
+import Controller.ClienteController;
+import Facade.Cliente;
+import java.util.List;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -15,22 +18,40 @@ import javax.swing.border.Border;
  */
 public class ctlCadCliente extends ctlBase
 {
+
     statusTela status = statusTela.Consulta;
+
     enum statusTela
     {
+
         Consulta,
         Novo,
         Edita
     }
-    
+
     /**
      * Creates new form ctlCadBase
      */
     public ctlCadCliente(String titulo, frmMenu telaPrincipal)
     {
-        super(titulo,telaPrincipal);
+        super(titulo, telaPrincipal);
         initComponents();
+
+        carregaTabela();
         
+        tblClientes.getSelectionModel().addListSelectionListener(new ListSelectionListener()
+        {
+            public void valueChanged(ListSelectionEvent event)
+            {
+                // do some actions here, for example
+                // print first column value from selected row
+                txtNomeCliente.setText(tblClientes.getValueAt(tblClientes.getSelectedRow(), 1).toString());
+                txtEndereco.setText(tblClientes.getValueAt(tblClientes.getSelectedRow(), 2).toString());
+                txtTelefone.setText(tblClientes.getValueAt(tblClientes.getSelectedRow(), 3).toString());
+                reavaliaBotoes(statusTela.Consulta);
+            }
+        });
+
         reavaliaBotoes(statusTela.Consulta);
     }
 
@@ -52,7 +73,7 @@ public class ctlCadCliente extends ctlBase
         btnCancelar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblClientes = new javax.swing.JTable();
         lblNomeCliente = new javax.swing.JLabel();
         txtNomeCliente = new javax.swing.JTextField();
         lblTelefone = new javax.swing.JLabel();
@@ -143,22 +164,37 @@ public class ctlCadCliente extends ctlBase
 
         pnlBotoesLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnCancelar, btnEditar, btnFechar, btnNovo, btnSalvar});
 
-        btnFechar.getAccessibleContext().setAccessibleName("Fechar");
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][]
             {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String []
             {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID Cliente", "Nome", "Endereço", "Telefone"
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        )
+        {
+            Class[] types = new Class []
+            {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean []
+            {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex)
+            {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex)
+            {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tblClientes);
 
         lblNomeCliente.setText("Nome do Cliente");
 
@@ -171,23 +207,22 @@ public class ctlCadCliente extends ctlBase
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblNomeCliente))
+                            .addComponent(txtNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(lblTelefone)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 176, Short.MAX_VALUE))
                             .addComponent(txtTelefone)))
+                    .addComponent(txtEndereco, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(lblEndereco)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(txtEndereco))
+                        .addComponent(lblEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -236,6 +271,19 @@ public class ctlCadCliente extends ctlBase
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnCancelarActionPerformed
     {//GEN-HEADEREND:event_btnCancelarActionPerformed
         // ToDo - Retornar campos para o default
+        if (tblClientes.getSelectedRow() == -1)
+        {
+            txtNomeCliente.setText(null);
+            txtEndereco.setText(null);
+            txtTelefone.setText(null);
+        }
+        else
+        {
+            txtNomeCliente.setText(tblClientes.getValueAt(tblClientes.getSelectedRow(), 1).toString());
+            txtEndereco.setText(tblClientes.getValueAt(tblClientes.getSelectedRow(), 2).toString());
+            txtTelefone.setText(tblClientes.getValueAt(tblClientes.getSelectedRow(), 3).toString());
+        }
+        
         
         reavaliaBotoes(statusTela.Consulta);
     }//GEN-LAST:event_btnCancelarActionPerformed
@@ -254,7 +302,10 @@ public class ctlCadCliente extends ctlBase
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnSalvarActionPerformed
     {//GEN-HEADEREND:event_btnSalvarActionPerformed
-        // ToDo - Salva
+        ClienteController.getInstance().cadastrarCliente(txtNomeCliente.getText(), txtEndereco.getText(), txtTelefone.getText());
+
+        // Recarrega lista de clientes na tabela
+        carregaTabela();
         
         reavaliaBotoes(statusTela.Consulta);
     }//GEN-LAST:event_btnSalvarActionPerformed
@@ -262,25 +313,44 @@ public class ctlCadCliente extends ctlBase
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnNovoActionPerformed
     {//GEN-HEADEREND:event_btnNovoActionPerformed
         // ToDo - Preparar campos
-        
         reavaliaBotoes(statusTela.Novo);
     }//GEN-LAST:event_btnNovoActionPerformed
 
     // Métodos
+    public void carregaTabela()
+    {
+        DefaultTableModel model = (DefaultTableModel) tblClientes.getModel();
+        
+        // Limpa tabela
+        model.setRowCount(0);
+        
+        // Obtem lista de todos os clientes cadastrados
+        List<Cliente> lstClientes = ClienteController.getInstance().cmdBuscaCliente(null, null, null);
+        
+        for(Cliente cl : lstClientes)
+        {
+            List<Object> lstDados = ClienteController.getInstance().getDados(cl);
+            model.addRow(new Object[]{ lstDados.get(0).toString(), lstDados.get(1).toString(), lstDados.get(2).toString(), lstDados.get(3).toString() });
+        }
+    }
+    
     public void reavaliaBotoes(statusTela stt)
     {
         if (stt == statusTela.Consulta)
         {
             btnFechar.setEnabled(true);
             btnSalvar.setEnabled(false);
-            btnEditar.setEnabled(true);
             btnNovo.setEnabled(true);
             btnCancelar.setEnabled(false);
             txtEndereco.setEnabled(false);
             txtNomeCliente.setEnabled(false);
             txtTelefone.setEnabled(false);
+            if (tblClientes.getSelectedRow() == -1)
+                btnEditar.setEnabled(false);
+            else
+                btnEditar.setEnabled(true);
         }
-        
+
         if (stt == statusTela.Novo)
         {
             btnFechar.setEnabled(true);
@@ -291,8 +361,11 @@ public class ctlCadCliente extends ctlBase
             txtEndereco.setEnabled(true);
             txtNomeCliente.setEnabled(true);
             txtTelefone.setEnabled(true);
+            txtNomeCliente.setText(null);
+            txtEndereco.setText(null);
+            txtTelefone.setText(null);
         }
-        
+
         if (stt == statusTela.Edita)
         {
             btnFechar.setEnabled(true);
@@ -314,11 +387,11 @@ public class ctlCadCliente extends ctlBase
     private javax.swing.JButton btnSalvar;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblEndereco;
     private javax.swing.JLabel lblNomeCliente;
     private javax.swing.JLabel lblTelefone;
     private javax.swing.JPanel pnlBotoes;
+    private javax.swing.JTable tblClientes;
     private javax.swing.JTextField txtEndereco;
     private javax.swing.JTextField txtNomeCliente;
     private javax.swing.JTextField txtTelefone;

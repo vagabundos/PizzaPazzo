@@ -74,6 +74,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener
         jmCadProduto.addActionListener(this);
 
         setSize(800, 600);
+        setLocationRelativeTo(null);
         setResizable(false);
         setVisible(true);
         //initComponents();

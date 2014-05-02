@@ -5,7 +5,7 @@
 package Controller;
 
 import Facade.Pedido;
-import Singleton.PedidoFactoryConcrete;
+import Factory.PedidoFactoryConcrete;
 
 /**
  *
